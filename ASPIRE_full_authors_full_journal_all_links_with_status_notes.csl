@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" page-range-format="expanded" default-locale="en-US">
+  <info>
+    <title>ASPIRE Full Authors Full Journal DOI URL Status</title>
+    <title-short>ASPIRE-full-DOI-URL-status</title-short>
+    <id>http://www.zotero.org/styles/aspire-full-authors-full-journal-doi-url-status</id>
+    <link href="http://www.zotero.org/styles/aspire-full-authors-full-journal-doi-url-status" rel="self"/>
+    <link href="http://www.zotero.org/styles/american-meteorological-society" rel="template"/>
+    <category citation-format="author-date"/>
+    <category field="science"/>
+    <updated>2026-05-25T00:00:00+00:00</updated>
+    <summary>Author-date style for ASPIRE: bibliography lists all authors, uses full journal names, prints both DOI links and URL fields when present, and prints note/status fields for entries without final bibliographic details.</summary>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <locale xml:lang="en">
+    <terms>
+      <term name="et-al">et al.</term>
+      <term name="page" form="short">
+        <single>p.</single>
+        <multiple>pp.</multiple>
+      </term>
+    </terms>
+  </locale>
+
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="first" sort-separator=", " initialize-with=". " delimiter=", " and="text" delimiter-precedes-last="always"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" delimiter=", " and="text"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="book report thesis" match="any">
+        <text variable="title"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="status-note">
+    <text variable="note"/>
+  </macro>
+
+  <macro name="volume-issue">
+    <group>
+      <text variable="volume"/>
+      <text variable="issue" prefix="(" suffix=")"/>
+    </group>
+  </macro>
+
+  <macro name="doi-url">
+    <group delimiter=". ">
+      <text variable="DOI" prefix="https://doi.org/"/>
+      <text variable="URL"/>
+    </group>
+  </macro>
+
+  <macro name="journal-locators">
+    <group delimiter=", ">
+      <text variable="container-title" font-style="italic"/>
+      <text macro="volume-issue"/>
+      <text variable="page"/>
+      <text variable="number"/>
+    </group>
+  </macro>
+
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" collapse="year-suffix" year-suffix-delimiter=",">
+    <sort>
+      <key macro="author-short"/>
+      <key macro="issued-year"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=" ">
+        <text macro="author-short"/>
+        <text macro="issued-year"/>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="true" entry-spacing="0" line-spacing="1">
+    <sort>
+      <key macro="author"/>
+      <key macro="issued-year"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=" ">
+        <text macro="author"/>
+        <text macro="issued-year" prefix="(" suffix="):"/>
+      </group>
+      <choose>
+        <if type="article-journal" match="any">
+          <text macro="title" prefix=" "/>
+          <group prefix=". " delimiter=". ">
+            <text macro="journal-locators"/>
+            <text macro="doi-url"/>
+            <text macro="status-note"/>
+          </group>
+        </if>
+        <else-if type="book report" match="any">
+          <text macro="title" prefix=" "/>
+          <group prefix=". " delimiter=", ">
+            <text variable="publisher"/>
+            <text variable="publisher-place"/>
+            <text variable="number"/>
+            <text variable="number-of-pages" suffix=" pp"/>
+          </group>
+          <group prefix=". " delimiter=". ">
+            <text macro="doi-url"/>
+            <text macro="status-note"/>
+          </group>
+        </else-if>
+        <else>
+          <text macro="title" prefix=" "/>
+          <group prefix=". " delimiter=", ">
+            <text variable="container-title" font-style="italic"/>
+            <text macro="volume-issue"/>
+            <text variable="page"/>
+          </group>
+          <group prefix=". " delimiter=". ">
+            <text macro="doi-url"/>
+            <text macro="status-note"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
